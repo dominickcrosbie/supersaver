@@ -5,10 +5,8 @@
   "scripts": {
     "start": "serve -s dist",
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service --openssl-legacy-provider build",
     "lint": "vue-cli-service lint"
-    "dev": "cross-env NODE_OPTIONS=--openssl-legacy-provider vuepress dev src",
-    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider vue-cli-service build"    
   },
   "dependencies": {
     "core-js": "^3.6.4",
