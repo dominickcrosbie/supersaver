@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "serve -s dist -openssl-legacy-provider",
+    "dev": "npm run serve",
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service --openssl-legacy-provider build",
-    "lint": "vue-cli-service lint"
+    "build": "vue-cli-service build --openssl-legacy-provider",
+    "lint": "vue-cli-service lint",
+    "start": "serve -s dist -openssl-legacy-provider"
   },
   "dependencies": {
     "core-js": "^3.6.4",
@@ -18,7 +19,7 @@
     "@vue/cli-service": "~4.2.0",
     "babel-eslint": "^10.0.3",
     "eslint": "^8.57.1",
-    "eslint-plugin-vue": "^6.1.2",
+    "eslint-plugin-vue": "^8.0.0",  
     "vue-template-compiler": "^2.6.11",
     "node": "16.0.0",
     "eslint-webpack-plugin": "^3.2.0"
