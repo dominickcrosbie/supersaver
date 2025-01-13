@@ -10,7 +10,7 @@
     "start": "serve -s dist -openssl-legacy-provider"
   },
   "dependencies": {
-    "core-js": "^3.6.4",
+    "core-js": "^3.40.0",
     "vue": "^2.6.11"
   },
   "devDependencies": {
