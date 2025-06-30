@@ -1,0 +1,438 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "SunnyDay Analytics Weather API",
+    "version": "1.0",
+    "description": "API endpoints for weather data, specifically tailored for farming applications"
+  },
+  "servers": [
+    {
+      "url": "https://api.openweathermap.org",
+      "description": "OpenWeatherMap API Server"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "query",
+        "name": "appid"
+      }
+    },
+    "schemas": {
+      "GeocodingResponse": {
+        "type": "object",
+        "properties": {
+          "lat": {
+            "type": "number",
+            "description": "Latitude coordinate"
+          },
+          "lon": {
+            "type": "number",
+            "description": "Longitude coordinate"
+          },
+          "name": {
+            "type": "string",
+            "description": "City name"
+          },
+          "country": {
+            "type": "string",
+            "description": "Country code"
+          },
+          "cod": {
+            "type": "integer",
+            "description": "Response code"
+          }
+        },
+        "required": ["lat", "lon", "name", "country", "cod"]
+      },
+      "DaySummaryResponse": {
+        "type": "object",
+        "properties": {
+          "lat": {
+            "type": "number",
+            "description": "Latitude coordinate"
+          },
+          "lon": {
+            "type": "number",
+            "description": "Longitude coordinate"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "Date of the weather summary"
+          },
+          "units": {
+            "type": "string",
+            "enum": ["metric", "imperial"],
+            "description": "Units format"
+          },
+          "temperature": {
+            "type": "object",
+            "properties": {
+              "min": {
+                "type": "number",
+                "description": "Minimum temperature"
+              },
+              "max": {
+                "type": "number",
+                "description": "Maximum temperature"
+              },
+              "afternoon": {
+                "type": "number",
+                "description": "Afternoon temperature"
+              }
+            }
+          },
+          "humidity": {
+            "type": "object",
+            "properties": {
+              "afternoon": {
+                "type": "integer",
+                "description": "Afternoon humidity percentage"
+              }
+            }
+          },
+          "cloud_cover": {
+            "type": "object",
+            "properties": {
+              "afternoon": {
+                "type": "integer",
+                "description": "Afternoon cloud cover percentage"
+              }
+            }
+          },
+          "precipitation": {
+            "type": "object",
+            "properties": {
+              "total": {
+                "type": "number",
+                "description": "Total precipitation amount"
+              }
+            }
+          },
+          "wind": {
+            "type": "object",
+            "properties": {
+              "max": {
+                "type": "object",
+                "properties": {
+                  "speed": {
+                    "type": "number",
+                    "description": "Maximum wind speed"
+                  },
+                  "direction": {
+                    "type": "integer",
+                    "description": "Wind direction in degrees"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "required": ["lat", "lon", "date", "units", "temperature", "humidity", "cloud_cover", "precipitation", "wind"]
+      },
+      "OverviewResponse": {
+        "type": "object",
+        "properties": {
+          "summary": {
+            "type": "string",
+            "description": "Human-readable weather summary"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "Date of the forecast"
+          }
+        },
+        "required": ["summary", "date"]
+      },
+      "DashboardResponse": {
+        "type": "object",
+        "properties": {
+          "forecast": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "date": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "Forecast date"
+                },
+                "temperature": {
+                  "type": "number",
+                  "description": "Temperature"
+                },
+                "humidity": {
+                  "type": "integer",
+                  "description": "Humidity percentage"
+                },
+                "rain": {
+                  "type": "number",
+                  "description": "Rain probability"
+                },
+                "sunrise": {
+                  "type": "string",
+                  "description": "Sunrise time"
+                },
+                "sunset": {
+                  "type": "string",
+                  "description": "Sunset time"
+                },
+                "wind_speed": {
+                  "type": "number",
+                  "description": "Wind speed"
+                }
+              }
+            }
+          }
+        },
+        "required": ["forecast"]
+      }
+    }
+  },
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ],
+  "paths": {
+    "/data/2.5/weather": {
+      "get": {
+        "summary": "Get City Coordinates",
+        "description": "Convert city name to coordinates for weather API calls",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Dublin,IE"
+            },
+            "description": "City name and country code"
+          },
+          {
+            "name": "appid",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Your API key"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeocodingResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/data/3.0/onecall/day_summary": {
+      "get": {
+        "summary": "Get Mid-day Temperature Summary",
+        "description": "Get detailed weather summary for a specific location and date, focusing on mid-day conditions",
+        "parameters": [
+          {
+            "name": "lat",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "example": 53.3498
+            },
+            "description": "Latitude coordinate"
+          },
+          {
+            "name": "lon",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "example": -6.2603
+            },
+            "description": "Longitude coordinate"
+          },
+          {
+            "name": "units",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["metric", "imperial"],
+              "default": "metric"
+            },
+            "description": "Units format (metric or imperial)"
+          },
+          {
+            "name": "date",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "example": "2025-06-01"
+            },
+            "description": "Date for the weather summary"
+          },
+          {
+            "name": "appid",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Your API key"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DaySummaryResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/data/3.0/onecall/overview": {
+      "get": {
+        "summary": "Get Weather Overview",
+        "description": "Get a human-readable weather summary for tomorrow's conditions",
+        "parameters": [
+          {
+            "name": "lat",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "example": 52.6647
+            }
+          },
+          {
+            "name": "lon",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "example": -8.6231
+            }
+          },
+          {
+            "name": "date",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "2025-07-01"
+            },
+            "description": "Date for the weather summary"
+          },
+          {
+            "name": "appid",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OverviewResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/data/3.0/onecall": {
+      "get": {
+        "summary": "Get 7-day Farming Dashboard",
+        "description": "Get a comprehensive 7-day weather forecast tailored for farming applications in Limerick",
+        "parameters": [
+          {
+            "name": "lat",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "example": 52.6638
+            },
+            "description": "Limerick latitude"
+          },
+          {
+            "name": "lon",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "example": -8.6267
+            },
+            "description": "Limerick longitude"
+          },
+          {
+            "name": "units",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["metric", "imperial"],
+              "default": "metric"
+            },
+            "description": "Units format (metric or imperial)"
+          },
+          {
+            "name": "exclude",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["current", "minutely", "hourly", "daily", "alerts"],
+              "default": ["current", "minutely", "hourly"]
+            },
+            "description": "Exclude certain data types from the response"
+          },
+          {
+            "name": "appid",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DashboardResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}     

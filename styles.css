@@ -1,0 +1,71 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+}
+
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.card {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.footer {
+    margin-top: auto;
+    padding: 20px 0;
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+}
+
+#swagger-ui {
+    margin-top: 20px;
+}
+
+#postman-widget {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+#postman-widget .form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+#response {
+    margin-top: 20px;
+}
+
+pre {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+.alert {
+    margin-top: 15px;
+}
+
+.alert pre {
+    margin: 10px 0;
+}
+
+/* Chart.js customizations */
+canvas {
+    max-height: 400px;
+}
+
+.table {
+    margin-top: 20px;
+}
+
+.table th {
+    background-color: #f8f9fa;
+}

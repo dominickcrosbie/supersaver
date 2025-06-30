@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technical Presentation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-bundle.min.js"></script>
+    <script src="https://unpkg.com/swagger-ui-dist@4/swagger-ui-standalone-preset.js"></script></head>
+<style>
+   #swagger-ui {
+  background: var(--glassmorphism-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glassmorphism-border);
+  border-radius: var(--border-radius);
+  padding: 2rem;
+}
+
+/* Dark theme overrides for Swagger UI */
+#swagger-ui .swagger-ui {
+  color: var(--text-color);
+} 
+</style>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Technical Presentation </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="api-analysis.html">API Analysis</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="project-organization.html">Project Organization</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Task 1: API Analysis</h1>
+                <p class="lead">Interactive API documentation and testing environment</p>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="mb-0">API Documentation</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Error Code</th>
+                                        <th>Description</th>
+                                        <th>HTTP Status</th>
+                                        <th>Response Format</th>
+                                    </tr>
+                                </thead>
+                            
+                        <tbody>
+                            <tr>
+                                <td>400</td>
+                                <td>Bad Request</td>
+                                <td>400</td>
+                                <td>
+                                    <pre class="mb-0">
+{
+    "code": "400",
+    "message": "Invalid parameters",
+    "parameters":"List of all parameters names that are missing or incorrect will be <br /> returned in `parameters`attribute of the `ErrorResponse` object."
+}
+                                    </pre>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>401</td>
+                                <td>Unauthorized</td>
+                                <td>401</td>
+                                <td>
+                                    <pre class="mb-0">
+{
+    "code": "401",
+    "message": "Invalid API key",
+    "error": "You must add API token with granted access to the product to the request before returning it."
+}
+                                    </pre>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>404</td>
+                                <td>Not Found</td>
+                                <td>404</td>
+                                <td>
+                                    <pre class="mb-0">
+{
+    "code": "404",
+    "message": "Not found",
+    "error": "Data with requested parameters (lat, lon, date etc) does not exist in service database."
+}
+                                    </pre>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>429</td>
+                                <td>Rate Limit Exceeded</td>
+                                <td>429</td>
+                                <td>
+                                    <pre class="mb-0">
+{
+    "code": "429",
+    "message": "Too many requests",
+    "error": "Rate limit exceeded, please retry request after some time or extend your key quote",
+}
+                                    </pre>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>500</td>
+                                <td>Internal Server Error</td>
+                                <td>500</td>
+                                <td>
+                                    <pre class="mb-0">
+{
+    "cod": "500",
+    "message": "Internal server error",
+    "error": "Server encountered an unexpected condition, <br /> reach out to contact our support team at <a href="mailto:help@sunnydayanalytics.com">help@sunnydayanalytics.com</a>."  
+}
+                                    </pre>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>Common Error Scenarios</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Authentication Issues</h4>
+                        <ul>
+                            <li>Missing API key parameter (appid)</li>
+                            <li>Expired or revoked API key</li>
+                            <li>Insufficient permissions for requested resource</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h4>Request Validation</h4>
+                        <ul>
+                            <li>Missing required parameters</li>
+                            <li>Invalid parameter formats</li>
+                            <li>Parameter values out of bounds</li>
+                            <li>Invalid coordinate ranges</li>
+                        </ul>
+                    </div>
+                </div>
+                <h3>Rate Limiting</h3>
+                <p>The API implements rate limiting with the following quotas:</p>
+                <ul>
+                    <li>Free tier: 1000 requests per day</li>
+                    <li>Paid tiers: Higher quotas based on plan</li>
+                    <li>Rate limit reset occurs at midnight UTC</li>
+                </ul>
+
+                <h2>Mid-day temperatures Quick Start</h2>
+                <p>To retrieve mid-day temperatures for a specific location, follow these steps:</p>
+                <ol>
+                    <li>Get coordinates using the Geocoding endpoint</li>
+                    <li>Use coordinates with the Day Summary endpoint</li>
+                    <li>Push results to your data store using Zapier webhook</li>
+                </ol>
+
+                <h3>Example Workflow</h3>
+                <p>For Limerick, Ireland:</p>
+                <ol>
+                    <li>Get coordinates:
+                        <pre class="mb-0">
+GET https://api.openweathermap.org/data/2.5/weather?q=Limerick&appid=YOUR_API_KEY
+                        </pre>
+                    </li>
+                    <li>Get mid-day temperature:
+                        <pre class="mb-0">
+GET https://api.openweathermap.org/data/3.0/onecall/day_summary?lat=52.6647&lon=-8.6231&units=metric&date=2025-06-01&appid=YOUR_API_KEY
+                        </pre>
+                    </li>
+                    <li>Push to Zapier webhook:
+                        <pre class="mb-0">
+POST https://hooks.zapier.com/hooks/catch/11168475/ubwse9b/?date=2025-06-01&temp=16.14
+                        </pre>
+                    </li>
+                </ol>
+
+                <h3>Response Formats</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Geocoding Response</h4>
+                        <pre class="mb-0">
+{
+    "lat": 53.3498,
+    "lon": -6.2603,
+    "tz": "+01:00",
+    "date": "2025-06-01",
+    "units": "metric",
+    "cloud_cover": {
+        "afternoon": 75
+    },
+    "humidity": {
+        "afternoon": 76
+    },
+    "precipitation": {
+        "total": 0.36
+    },
+    "temperature": {
+        "min": 10.61,
+        "max": 17.79,
+        "afternoon": 16.14,
+        "night": 12.12,
+        "evening": 17.23,
+        "morning": 11.8
+    },
+    "pressure": {
+        "afternoon": 1009
+    },
+    "wind": {
+        "max": {
+            "speed": 10.29,
+            "direction": 280
+        }
+    }
+}
+                        </pre>
+                    </div>
+                    <div class="col-md-6">
+                        <h4>Day Summary Response</h4>
+                        <pre class="mb-0">
+{
+    "lat": 52.6647,
+    "lon": -8.6231,
+    "tz": "+01:00",
+    "date": "2025-06-01",
+    "units": "metric",
+    "cloud_cover": {
+        "afternoon": 75
+    },
+    "humidity": {
+        "afternoon": 76
+    },
+    "precipitation": {
+        "total": 0.36
+    },
+    "temperature": {
+        "min": 10.61,
+        "max": 17.79,
+        "afternoon": 16.14,
+        "night": 12.12,
+        "evening": 17.23,
+        "morning": 11.8
+    },
+    "pressure": {
+        "afternoon": 1009
+    },
+    "wind": {
+        "max": {
+            "speed": 10.29,
+            "direction": 280
+        }
+    }
+}
+                        </pre>
+                    </div>
+                </div>
+
+                <h3>Zapier Webhook Integration</h3>
+                <p>To store the results in a Google Sheet, use the Zapier webhook endpoint:</p>
+                <pre class="mb-0">
+https://hooks.zapier.com/hooks/catch/11168475/ubwse9b/?date={YYYY-MM-DD}&temp={decimal}
+</pre>
+                <p>This endpoint will automatically create a new row in the Google Sheet with the date and temperature data.</p>
+                <p>View the stored data in the Google Sheet <a href="https://docs.google.com/spreadsheets/d/1J7efr3E_pFRkQeHmXYKkTnI_aWk3Y6krPMSJ4gmloN0/edit?usp=sharing" target="_blank">here</a>.</p>
+                <br />
+                <iframe width="953" height="589" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vS2NqAMdVUJjlBcmGASnQ7b1WwQyTCDQcFvbT6J32OGUK6U5bgwLPm2CPYKeI0ZQBd8GxBnD_1VIojn/pubchart?oid=1706145803&amp;format=interactive"></iframe>
+            </p>
+            <h3>Weather Dashboard</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>7 day Forecast</h4>
+                    <ul>
+                        <li>Weather Forecast</li>
+                        <li>Rain Outlook</li>
+                        <li>Sunrise/Sunset</li>
+                        <li>Wind Speed</li>
+                    </ul>
+                </div>
+
+                <h4> Weather Forecast</h4>
+                <p>
+                    API GET calls provide a human readable weather summary for tomorrow's forecast.
+                </p>
+                <pre class="mb-0">
+GET https://api.openweathermap.org/data/3.0/onecall/overview?lat={lat}&lon={lon}&unit=metric&date={tomorrow}&appid={API key}
+                </pre>
+                <iframe width="200" height="300" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vS2NqAMdVUJjlBcmGASnQ7b1WwQyTCDQcFvbT6J32OGUK6U5bgwLPm2CPYKeI0ZQBd8GxBnD_1VIojn/pubhtml?gid=988329721&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+                <br />
+                <h4> Rain Outlook</h4>
+                <iframe width="600" height="371" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vS2NqAMdVUJjlBcmGASnQ7b1WwQyTCDQcFvbT6J32OGUK6U5bgwLPm2CPYKeI0ZQBd8GxBnD_1VIojn/pubchart?oid=1161696948&amp;format=interactive"></iframe>
+                <br />
+                <h4> Sunrise/Sunset</h4>
+                <iframe width="600" height="371" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vS2NqAMdVUJjlBcmGASnQ7b1WwQyTCDQcFvbT6J32OGUK6U5bgwLPm2CPYKeI0ZQBd8GxBnD_1VIojn/pubchart?oid=1438081554&amp;format=interactive"></iframe>
+                
+                <h4> Wind Speed</h4>
+                <iframe width="600" height="371" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vS2NqAMdVUJjlBcmGASnQ7b1WwQyTCDQcFvbT6J32OGUK6U5bgwLPm2CPYKeI0ZQBd8GxBnD_1VIojn/pubchart?oid=152066621&amp;format=interactive"></iframe>            </div>
+        </div>
+
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div id="swagger-ui"></div>
+                <script>
+                    window.onload = function() {
+                        const ui = SwaggerUIBundle({
+                            url: "swagger.json", // Use relative path
+                            dom_id: '#swagger-ui',
+                            deepLinking: true,
+                            presets: [
+                                SwaggerUIBundle.presets.apis,
+                                SwaggerUIStandalonePreset
+                            ],
+                            plugins: [
+                                SwaggerUIBundle.plugins.DownloadUrl
+                            ],
+                            layout: "StandaloneLayout"
+                        });
+
+                        window.ui = ui;
+                    };
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer mt-5 py-3 bg-light">
+        <div class="container text-center">
+            <span class="text-muted">© 2025 Dom Crosbie. All rights reserved.</span>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/swagger-ui-dist@4.15.5/swagger-ui-bundle.js"></script>
+    <script src="https://unpkg.com/swagger-ui-dist@4.15.5/swagger-ui-standalone-preset.js"></script>
+    <script>
+        window.onload = function() {
+            const spec = {
+                "openapi": "3.0.0",
+                "info": {
+                    "title": "OpenWeatherMap One Call API 3.0",
+                    "version": "3.0",
+                    "description": "Weather API for comprehensive weather data"
+                },
+                "servers": [
+                    {
+                    "url": "https://api.openweathermap.org",
+                    "description": "OpenWeatherMap API Server"
+                    }
+                ],
+                "components": {
+                    "securitySchemes": {
+                    "ApiKeyAuth": {
+                        "type": "apiKey",
+                        "in": "query",
+                        "name": "appid"
+                    }
+                    }
+                },
+                "security": [
+                    {
+                    "ApiKeyAuth": []
+                    }
+                ],
+                "paths": {
+                    "/data/2.5/weather": {
+                    "get": {
+                        "summary": "Get City Coordinates (Helper Endpoint)",
+                        "description": "Convert city name to coordinates for weather API calls",
+                        "parameters": [
+                        {
+                            "name": "q",
+                            "in": "query",
+                            "required": true,
+                            "schema": {
+                            "type": "string",
+                            "example": "Dublin,IE"
+                            },
+                            "description": "City name and country code"
+                        },
+                        {
+                            "name": "appid",
+                            "in": "query",
+                            "required": true,
+                            "schema": {
+                            "type": "string",
+                            "default": "7d4e55f651638dad9e7bec55af2337bf"
+                            }
+                        }
+                        ]
+                    }
+                    },                    
+                    "/data/3.0/onecall/day_summary": {
+                    "get": {
+                        "summary": "Get weather for a specific Date and Location",
+                        "description": "Takes latitude and longitude coordinates and returns weather for a specific Date and Location",
+                        "parameters": [
+                        {
+                            "name": "lat",
+                            "in": "query",
+                            "required": true,
+                            "schema": {
+                            "type": "number",
+                            "example": 53.3498
+                            },
+                            "description": "Latitude coordinate"
+                        },
+                        {
+                            "name": "lon",
+                            "in": "query",
+                            "required": true,
+                            "schema": {
+                            "type": "number",
+                            "example": -6.2603
+                            },
+                            "description": "Longitude coordinate"
+                        },
+                        {
+                            "name": "units",
+                            "in": "query",
+                            "required": true,
+                            "schema": {
+                            "type": "string",
+                            "enum": ["metric", "imperial"],
+                            "default": "metric"
+                            },
+                            "description": "Units format (metric or imperial)"
+                        },
+                        {
+                            "name": "date",
+                            "in": "query",
+                            "required": true,
+                            "schema": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "2025-06-01"
+                            },
+                            "description": "Date for the weather summary"
+                        },
+                        {
+                            "name": "appid",
+                            "in": "query",
+                            "required": true,
+                            "schema": {
+                            "type": "string",
+                            "default": "7d4e55f651638dad9e7bec55af2337bf"
+                            },
+                            "description": "Your API key"
+                        }
+                        ]
+                    }
+                    },
+                    "/data/3.0/onecall/overview": {
+                    "get": {
+                        "summary": "Get a human readable summary on tomorrow's weather",
+                        "parameters": [
+                        {
+                            "name": "lat",
+                            "in": "query",
+                            "required": true,
+                            "schema": {
+                            "type": "number",
+                            "example": 52.6647
+                            }
+                        },
+                        {
+                            "name": "lon",
+                            "in": "query",
+                            "required": true,
+                            "schema": {
+                            "type": "number",
+                            "example": -8.6231
+                            }
+                        },
+                        {
+                            "name": "date (tomorrow)",
+                            "in": "query",
+                            "required": true,
+                            "schema": {
+                            "type": "string",
+                            "example": "2025-07-01"
+                            },
+                            "description": "Date for the weather summary"
+                        },
+                        {
+                            "name": "appid",
+                            "in": "query",
+                            "required": true,
+                            "schema": {
+                            "type": "string",
+                            "default": "7d4e55f651638dad9e7bec55af2337bf"
+                            }
+                        }
+                        ]
+                    }
+                    },
+                    "/data/3.0/onecall/": {
+                    "get": {
+                        "summary": "Populate a dashboard for Limerick Farming",
+                        "description": "7 day forecast, provides valuable insights to farmers",
+                        "parameters": [
+                        {
+                            "name": "lat",
+                            "in": "query",
+                            "required": true,
+                            "schema": {
+                            "type": "number",
+                            "example": 52.6638
+                            },
+                            "description": "Limerick latitude"
+                        },
+                        {
+                            "name": "lon",
+                            "in": "query",
+                            "required": true,
+                            "schema": {
+                            "type": "number",
+                            "example": -8.6267
+                            },
+                            "description": "Limerick longitude"
+                        },
+                        {
+                            "name": "units",
+                            "in": "query",
+                            "required": false,
+                            "schema": {
+                            "type": "string",
+                            "enum": ["metric", "imperial"],
+                            "default": "metric"
+                            },
+                            "description": "Units format (metric or imperial)"
+                        },
+                        {
+                            "name": "exclude",
+                            "in": "query",
+                            "required": false,
+                            "schema": {
+                            "type": "string",
+                            "enum": ["current", "minutely", "hourly", "daily", "alerts"],
+                            "default": ["current", "minutely", "hourly"]
+                            },
+                            "description": "Exclude certain data types from the response"
+                        },
+                        {
+                            "name": "appid",
+                            "in": "query",
+                            "required": true,
+                            "schema": {
+                            "type": "string",
+                            "default": "7d4e55f651638dad9e7bec55af2337bf"
+                            }
+                        }
+                        ]
+                    }
+                    }
+                }
+                };
+
+                // Initialize Swagger UI
+                SwaggerUIBundle({
+                url: null,
+                spec: spec,
+                dom_id: '#swagger-ui',
+                deepLinking: true,
+                presets: [
+                    SwaggerUIBundle.presets.apis,
+                    SwaggerUIStandalonePreset
+                ],
+                plugins: [
+                    SwaggerUIBundle.plugins.DownloadUrl
+                ],
+                layout: "BaseLayout"
+                });
+        };
+    </script>
+</body>
+</html>
