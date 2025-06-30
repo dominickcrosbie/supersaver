@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "SunnyDay Analytics Weather API",
+    "title": "Sunny Days Analytics Weather API",
     "version": "1.0",
     "description": "API endpoints for weather data, specifically tailored for farming applications"
   },
