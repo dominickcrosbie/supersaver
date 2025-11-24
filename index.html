@@ -1,19 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-WHZ8GP3C');</script>
-    <!-- End Google Tag Manager -->    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Technical Presentation - Dom Crosbie</title>
+    <meta name="description" content="SuperKeeper - Expert Australian Superannuation services for expats. Maximize your super returns and manage your DASP claims efficiently.">
+    <title>SuperKeeper - Australian Superannuation for Expats</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" as="script" href="assets/js/main.js">
+    <link rel="preload" as="style" href="assets/css/style.css">
+    
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-WHZ8GP3C');</script>
+    <!-- End Google Tag Manager -->
+    
     <style>
         :root {
             --primary-color: #2c3e50;
@@ -362,7 +388,46 @@
         .stagger-3 { transition-delay: 0.3s; }
     </style>
 </head>
-<body>
+<body class="home-page">
+    <!-- Back to top button -->
+    <a href="#" class="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+    
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a href="index.html" class="nav-brand">SuperKeeper</a>
+            
+            <!-- Mobile menu button -->
+            <button class="mobile-menu-btn" aria-label="Toggle navigation">
+                <span class="menu-icon"></span>
+                <span class="menu-icon"></span>
+                <span class="menu-icon"></span>
+            </button>
+            
+            <!-- Desktop Navigation -->
+            <div class="nav-links">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link active">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="dasp.html" class="nav-link">DASP Info</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="services.html" class="nav-link">Our Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="calculator.html" class="nav-link">Calculator</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#contact" class="btn btn-primary ms-lg-3">Contact Us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-5MS4Z7W3JL"></script>
 <script>
@@ -481,6 +546,475 @@
         // Initialize animations on load
         window.addEventListener('load', () => {
             document.querySelector('.header-section').classList.add('visible');
+        });
+    </script>
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <h1 class="hero-title">Maximize Your Australian Superannuation</h1>
+                    <p class="hero-subtitle">Expert assistance for expats to claim and manage their Australian superannuation with confidence and ease.</p>
+                    <div class="hero-cta">
+                        <a href="dasp.html" class="btn btn-primary btn-lg me-3">Claim Your Super</a>
+                        <a href="#how-it-works" class="btn btn-outline btn-lg">Learn More</a>
+                    </div>
+                </div>
+                <div class="col-lg-6 d-none d-lg-block" data-aos="fade-left">
+                    <div class="hero-image">
+                        <img src="assets/images/hero-illustration.svg" alt="Superannuation illustration" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Stats Section -->
+    <section id="stats" class="section bg-light">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-4 mb-4 mb-md-0" data-aos="fade-up" data-aos-delay="100">
+                    <div class="stat-item">
+                        <h3 class="display-4 text-primary mb-2">$1.2B+</h3>
+                        <p>In Super Claims Processed</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4 mb-md-0" data-aos="fade-up" data-aos-delay="200">
+                    <div class="stat-item">
+                        <h3 class="display-4 text-primary mb-2">15,000+</h3>
+                        <p>Expats Helped</p>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="stat-item">
+                        <h3 class="display-4 text-primary mb-2">98%</h3>
+                        <p>Success Rate</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="section">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>How It Works</h2>
+                <p class="lead">Get your Australian superannuation in 3 simple steps</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card h-100">
+                        <div class="card-body text-center p-4">
+                            <div class="step-number">1</div>
+                            <h3 class="h4 mb-3">Submit Your Details</h3>
+                            <p>Complete our simple online form with your personal and visa information.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card h-100">
+                        <div class="card-body text-center p-4">
+                            <div class="step-number">2</div>
+                            <h3 class="h4 mb-3">Document Verification</h3>
+                            <p>Our experts verify your documents and prepare your DASP application.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="card h-100">
+                        <div class="card-body text-center p-4">
+                            <div class="step-number">3</div>
+                            <h3 class="h4 mb-3">Get Paid</h3>
+                            <p>Receive your superannuation directly to your bank account, minus our small fee.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-5" data-aos="fade-up">
+                <a href="dasp.html" class="btn btn-primary btn-lg">Start Your Claim Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section id="why-choose-us" class="section bg-light">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-5 mb-lg-0" data-aos="fade-right">
+                    <img src="assets/images/why-choose-us.svg" alt="Why choose SuperKeeper" class="img-fluid">
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <h2 class="mb-4">Why Choose SuperKeeper?</h2>
+                    <div class="feature-list">
+                        <div class="feature-item d-flex mb-4">
+                            <div class="feature-icon me-4">
+                                <i class="fas fa-shield-alt text-primary"></i>
+                            </div>
+                            <div>
+                                <h4 class="h5">Secure & Confidential</h4>
+                                <p class="mb-0">Your personal and financial information is protected with bank-level security.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item d-flex mb-4">
+                            <div class="feature-icon me-4">
+                                <i class="fas fa-clock text-primary"></i>
+                            </div>
+                            <div>
+                                <h4 class="h5">Fast Processing</h4>
+                                <p class="mb-0">Average processing time of just 2-3 weeks from application to payment.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item d-flex">
+                            <div class="feature-icon me-4">
+                                <i class="fas fa-headset text-primary"></i>
+                            </div>
+                            <div>
+                                <h4 class="h5">Dedicated Support</h4>
+                                <p class="mb-0">Our team is available to assist you at every step of the process.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="section">
+        <div class="container">
+            <div class="section-title text-center" data-aos="fade-up">
+                <h2>What Our Clients Say</h2>
+                <p class="lead">Don't just take our word for it</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="testimonial-card card h-100">
+                        <div class="card-body">
+                            <div class="testimonial-rating mb-3">
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                            </div>
+                            <p class="testimonial-text">"SuperKeeper made the entire process so simple. I received my super within 2 weeks of applying. Highly recommended!"</p>
+                            <div class="testimonial-author">
+                                <h5 class="mb-1">Sarah K.</h5>
+                                <p class="text-muted mb-0">Former Working Holiday Visa Holder</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="testimonial-card card h-100">
+                        <div class="card-body">
+                            <div class="testimonial-rating mb-3">
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                            </div>
+                            <p class="testimonial-text">"I was skeptical at first, but the team at SuperKeeper was incredibly professional and helped me recover my super from 5 years ago."</p>
+                            <div class="testimonial-author">
+                                <h5 class="mb-1">James L.</h5>
+                                <p class="text-muted mb-0">Former Student Visa Holder</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="testimonial-card card h-100">
+                        <div class="card-body">
+                            <div class="testimonial-rating mb-3">
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star-half-alt text-warning"></i>
+                            </div>
+                            <p class="testimonial-text">"The entire process was smooth and transparent. I appreciated the regular updates and the team's responsiveness to my questions."</p>
+                            <div class="testimonial-author">
+                                <h5 class="mb-1">Emma R.</h5>
+                                <p class="text-muted mb-0">Former Skilled Worker</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section bg-primary text-white">
+        <div class="container">
+            <div class="row justify-content-center text-center">
+                <div class="col-lg-8" data-aos="zoom-in">
+                    <h2 class="mb-4">Ready to Claim Your Super?</h2>
+                    <p class="lead mb-4">Join thousands of expats who have successfully claimed their Australian superannuation with our help.</p>
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="dasp.html" class="btn btn-light btn-lg">Start Your Claim</a>
+                        <a href="#contact" class="btn btn-outline-light btn-lg">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="section">
+        <div class="container">
+            <div class="section-title text-center" data-aos="fade-up">
+                <h2>Frequently Asked Questions</h2>
+                <p class="lead">Everything you need to know about claiming your super</p>
+            </div>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="accordion" id="faqAccordion">
+                        <div class="accordion-item mb-3 border-0 shadow-sm" data-aos="fade-up">
+                            <h3 class="accordion-header" id="headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Am I eligible to claim my Australian superannuation?
+                                </button>
+                            </h3>
+                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    You may be eligible to claim your Australian superannuation if you have left Australia and your visa has expired or been cancelled. You must have previously worked in Australia and had superannuation contributions made on your behalf.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item mb-3 border-0 shadow-sm" data-aos="fade-up" data-aos-delay="50">
+                            <h3 class="accordion-header" id="headingTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    How much does it cost to use your service?
+                                </button>
+                            </h3>
+                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Our fee is a small percentage of the superannuation amount successfully claimed, and we only get paid when you get paid. There are no upfront costs or hidden fees. Contact us for a personalized quote based on your specific situation.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item mb-3 border-0 shadow-sm" data-aos="fade-up" data-aos-delay="100">
+                            <h3 class="accordion-header" id="headingThree">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    How long does the process take?
+                                </button>
+                            </h3>
+                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    The processing time typically takes between 2-4 weeks from the date we submit your complete application to the ATO. However, processing times can vary depending on the complexity of your case and the current workload at the ATO.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item mb-3 border-0 shadow-sm" data-aos="fade-up" data-aos-delay="150">
+                            <h3 class="accordion-header" id="headingFour">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                    What documents do I need to provide?
+                                </button>
+                            </h3>
+                            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    You'll typically need to provide a copy of your passport, Australian visa grant notice, and proof of your current address. If your name has changed, you may also need to provide supporting documentation. Our team will guide you through the specific requirements for your situation.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section bg-light">
+        <div class="container">
+            <div class="section-title text-center" data-aos="fade-up">
+                <h2>Get In Touch</h2>
+                <p class="lead">Have questions? We're here to help</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-6 mb-5 mb-lg-0" data-aos="fade-right">
+                    <form id="contactForm" class="needs-validation" novalidate>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name" class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" id="name" required>
+                                    <div class="invalid-feedback">Please enter your name.</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="email" class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" id="email" required>
+                                    <div class="invalid-feedback">Please enter a valid email address.</div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="subject" class="form-label">Subject</label>
+                                    <input type="text" class="form-control" id="subject" required>
+                                    <div class="invalid-feedback">Please enter a subject.</div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="message" class="form-label">Message</label>
+                                    <textarea class="form-control" id="message" rows="5" required></textarea>
+                                    <div class="invalid-feedback">Please enter your message.</div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="privacyPolicy" required>
+                                    <label class="form-check-label" for="privacyPolicy">
+                                        I agree to the <a href="#" class="text-primary">Privacy Policy</a> and <a href="#" class="text-primary">Terms of Service</a>.
+                                    </label>
+                                    <div class="invalid-feedback">You must agree before submitting.</div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">Send Message</button>
+                            </div>
+                        </div>
+                        <div class="form-success mt-3 d-none">
+                            <div class="alert alert-success">
+                                Thank you for your message! We'll get back to you soon.
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-lg-5 offset-lg-1" data-aos="fade-left">
+                    <div class="contact-info">
+                        <div class="contact-item d-flex mb-4">
+                            <div class="contact-icon me-4">
+                                <i class="fas fa-map-marker-alt fa-2x text-primary"></i>
+                            </div>
+                            <div>
+                                <h4 class="h5">Our Office</h4>
+                                <p class="mb-0">123 Super Street, Sydney NSW 2000, Australia</p>
+                            </div>
+                        </div>
+                        <div class="contact-item d-flex mb-4">
+                            <div class="contact-icon me-4">
+                                <i class="fas fa-envelope fa-2x text-primary"></i>
+                            </div>
+                            <div>
+                                <h4 class="h5">Email Us</h4>
+                                <p class="mb-0">info@superkeeper.com</p>
+                            </div>
+                        </div>
+                        <div class="contact-item d-flex">
+                            <div class="contact-icon me-4">
+                                <i class="fas fa-phone-alt fa-2x text-primary"></i>
+                            </div>
+                            <div>
+                                <h4 class="h5">Call Us</h4>
+                                <p class="mb-0">+61 2 1234 5678</p>
+                            </div>
+                        </div>
+                        
+                        <div class="social-links mt-5">
+                            <h5 class="mb-3">Follow Us</h5>
+                            <ul class="list-inline">
+                                <li class="list-inline-item me-3">
+                                    <a href="#" class="text-primary" aria-label="Facebook">
+                                        <i class="fab fa-facebook-f fa-lg"></i>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item me-3">
+                                    <a href="#" class="text-primary" aria-label="Twitter">
+                                        <i class="fab fa-twitter fa-lg"></i>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item me-3">
+                                    <a href="#" class="text-primary" aria-label="LinkedIn">
+                                        <i class="fab fa-linkedin-in fa-lg"></i>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="#" class="text-primary" aria-label="Instagram">
+                                        <i class="fab fa-instagram fa-lg"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-links">
+                <div class="footer-widget">
+                    <h5 class="text-white mb-4">SuperKeeper</h5>
+                    <p>Helping expats claim their Australian superannuation quickly and easily since 2015.</p>
+                </div>
+                <div class="footer-widget">
+                    <h6 class="text-white mb-4">Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html">Home</a></li>
+                        <li class="mb-2"><a href="dasp.html">DASP Info</a></li>
+                        <li class="mb-2"><a href="services.html">Our Services</a></li>
+                        <li class="mb-2"><a href="calculator.html">Calculator</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-widget">
+                    <h6 class="text-white mb-4">Services</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#">Superannuation Claims</a></li>
+                        <li class="mb-2"><a href="#">DASP Applications</a></li>
+                        <li class="mb-2"><a href="#">Super Consolidation</a></li>
+                        <li><a href="#">Tax Advice</a></li>
+                    </ul>
+                </div>
+                <div class="footer-widget">
+                    <h6 class="text-white mb-4">Legal</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#">Privacy Policy</a></li>
+                        <li class="mb-2"><a href="#">Terms of Service</a></li>
+                        <li class="mb-2"><a href="#">Refund Policy</a></li>
+                        <li><a href="#">Complaints</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="mb-0">&copy; 2023 SuperKeeper. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- AOS Animation -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Main JS -->
+    <script src="assets/js/main.js"></script>
+    
+    <!-- Initialize AOS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true
+            });
         });
     </script>
 </body>

@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Calculator - SuperKeeper</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.2.31/dist/vue.global.min.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-piggy-bank me-2"></i>SuperKeeper
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dasp.html">DASP Info</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="services.html">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="calculator.html">Calculator</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Super Withdrawal Calculator</h1>
+                <p class="lead">Calculate your estimated superannuation return based on your visa type and salary history</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Calculator Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div id="calculator-app" class="calculator-container">
+                        <!-- Input Section -->
+                        <form @submit.prevent="calculateSuper">
+                            <!-- Year Range Selection -->
+                            <div class="form-section-title">
+                                <i class="fas fa-calendar me-2"></i>Select Your Time in Australia
+                            </div>
+                            
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="arrivalYear" class="form-label">Year of Arrival in Australia</label>
+                                        <input 
+                                            type="number" 
+                                            class="form-control form-control-lg" 
+                                            id="arrivalYear" 
+                                            v-model.number="arrivalYear" 
+                                            min="2000" 
+                                            :max="currentYear"
+                                            required
+                                        >
+                                        <small class="text-muted">When did you start working in Australia?</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="departureYear" class="form-label">Year of Departure from Australia</label>
+                                        <input 
+                                            type="number" 
+                                            class="form-control form-control-lg" 
+                                            id="departureYear" 
+                                            v-model.number="departureYear" 
+                                            :min="arrivalYear" 
+                                            :max="currentYear + 1"
+                                            required
+                                        >
+                                        <small class="text-muted">When did you or will you leave Australia?</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Annual Salary Details -->
+                            <div class="form-section-title mt-5">
+                                <i class="fas fa-dollar-sign me-2"></i>Annual Salary & Visa Details
+                            </div>
+
+                            <div v-if="years.length === 0" class="alert alert-warning">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                Please select valid arrival and departure years to proceed.
+                            </div>
+
+                            <div v-for="(year, index) in years" :key="index" class="salary-year-group">
+                                <div class="row g-3">
+                                    <div class="col-md-3">
+                                        <label class="form-label">Financial Year</label>
+                                        <div class="form-control form-control-plaintext bg-light p-2">
+                                            <strong>{{ year }}-{{ year + 1 }}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label :for="'salary' + index" class="form-label">Annual Salary (AUD)</label>
+                                        <input 
+                                            type="number" 
+                                            class="form-control" 
+                                            :id="'salary' + index" 
+                                            v-model.number="salaries[index]" 
+                                            min="0" 
+                                            step="1000" 
+                                            placeholder="0.00"
+                                            required
+                                        >
+                                        <small class="text-muted">Gross annual salary</small>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <label :for="'visa' + index" class="form-label">Visa Type</label>
+                                        <select class="form-select" :id="'visa' + index" v-model="visaTypes[index]" required>
+                                            <option value="working">Working Holiday (417/462) - 35% tax</option>
+                                            <option value="student">Student Visa (500) - 35% tax</option>
+                                            <option value="skilled">Skilled Visa (189/190/491) - 20% tax</option>
+                                            <option value="temporary">Temporary Work (482) - 20% tax</option>
+                                            <option value="other">Other - 35% tax</option>
+                                        </select>
+                                        <small class="text-muted">Visa determines your tax rate</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="d-grid gap-2 mt-5">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-calculator me-2"></i>Calculate My Super Return
+                                </button>
+                                <button type="button" @click="resetCalculator" class="btn btn-outline-secondary">
+                                    <i class="fas fa-redo me-2"></i>Clear & Reset
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- Results Section -->
+                        <div v-if="showResults" class="results-container mt-5">
+                            <div class="form-section-title">
+                                <i class="fas fa-chart-pie me-2"></i>Your Estimated Super Withdrawal
+                            </div>
+
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-4">
+                                    <div class="result-card">
+                                        <div class="result-label">Total Super Accumulated</div>
+                                        <div class="result-value">{{ formatCurrency(totalSuper) }}</div>
+                                        <small class="text-muted d-block mt-2">Based on 10.5% contribution rate</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="result-card warning">
+                                        <div class="result-label">Estimated Tax Deducted</div>
+                                        <div class="result-value">{{ formatCurrency(taxAmount) }}</div>
+                                        <small class="text-muted d-block mt-2">At {{ taxRateLabel }} rate</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="result-card success">
+                                        <div class="result-label">Your Net Withdrawal</div>
+                                        <div class="result-value">{{ formatCurrency(netWithdrawal) }}</div>
+                                        <small class="text-muted d-block mt-2">Amount you'll receive</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Net Withdrawal Highlight -->
+                            <div class="card bg-success text-white mb-4">
+                                <div class="card-body text-center py-4">
+                                    <h5 class="card-title">Your Estimated Net Withdrawal</h5>
+                                    <h2 class="display-4 fw-bold">{{ formatCurrency(netWithdrawal) }}</h2>
+                                    <p class="card-text mb-0">This is the estimated amount you'll receive after tax</p>
+                                </div>
+                            </div>
+
+                            <!-- Breakdown Info -->
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-header bg-light">
+                                            <h6 class="mb-0">Calculation Summary</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <table class="table table-sm mb-0">
+                                                <tr>
+                                                    <td>Number of years:</td>
+                                                    <td class="text-end"><strong>{{ years.length }}</strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Total salary:</td>
+                                                    <td class="text-end"><strong>{{ formatCurrency(years.reduce((sum, _, i) => sum + (salaries[i] || 0), 0)) }}</strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Super rate applied:</td>
+                                                    <td class="text-end"><strong>10.5%</strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tax rate applied:</td>
+                                                    <td class="text-end"><strong>{{ (taxRate * 100).toFixed(1) }}%</strong></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-header bg-light">
+                                            <h6 class="mb-0">Key Information</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <ul class="list-unstyled">
+                                                <li class="mb-2">
+                                                    <i class="fas fa-info-circle text-info me-2"></i>
+                                                    <small>This is an estimate based on current rates</small>
+                                                </li>
+                                                <li class="mb-2">
+                                                    <i class="fas fa-info-circle text-info me-2"></i>
+                                                    <small>Actual amounts may vary based on your circumstances</small>
+                                                </li>
+                                                <li class="mb-2">
+                                                    <i class="fas fa-info-circle text-info me-2"></i>
+                                                    <small>Tax rates are subject to change</small>
+                                                </li>
+                                                <li class="mb-2">
+                                                    <i class="fas fa-info-circle text-info me-2"></i>
+                                                    <small>Consult a tax professional for personalized advice</small>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Important Notice -->
+                            <div class="alert alert-warning">
+                                <h5 class="alert-heading"><i class="fas fa-exclamation-triangle me-2"></i>Important Disclaimer</h5>
+                                <p class="mb-0">
+                                    This calculator provides a general estimate only. It has not taken into account your specific circumstances, objectives, or financial situation. 
+                                    The actual amount you receive may vary based on factors such as lost super, contributions made, investment performance, and changes in tax legislation. 
+                                    Before making any financial decisions, please consult a licensed financial advisor.
+                                </p>
+                            </div>
+
+                            <!-- Next Steps -->
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <h5 class="card-title">What's Next?</h5>
+                                    <p class="card-text">Ready to proceed with your DASP application?</p>
+                                    <div class="d-grid gap-2">
+                                        <a href="dasp.html" class="btn btn-info">
+                                            <i class="fas fa-book me-2"></i>Learn About DASP Process
+                                        </a>
+                                        <a href="services.html" class="btn btn-success">
+                                            <i class="fas fa-briefcase me-2"></i>Get Professional Help
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Information Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h2>Understanding Your Calculation</h2>
+                    
+                    <div class="mt-4">
+                        <h5 class="mb-3"><i class="fas fa-coins text-primary me-2"></i>How Superannuation Works</h5>
+                        <p>
+                            Superannuation is a retirement savings scheme in Australia where employers contribute a percentage of your salary 
+                            (currently 10.5%) to a superannuation fund on your behalf. When you leave Australia as a temporary resident, 
+                            you may be eligible to withdraw these funds through the DASP scheme.
+                        </p>
+                    </div>
+
+                    <div class="mt-4">
+                        <h5 class="mb-3"><i class="fas fa-percentage text-warning me-2"></i>Tax Rates Explained</h5>
+                        <p>
+                            Different visa types have different tax rates applied to super withdrawals:
+                        </p>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>Working Holiday (417/462):</strong> 35% tax on withdrawal</li>
+                            <li class="list-group-item"><strong>Student Visa (500):</strong> 35% tax on withdrawal</li>
+                            <li class="list-group-item"><strong>Skilled Visa (189/190/491):</strong> 20% tax on withdrawal</li>
+                            <li class="list-group-item"><strong>Temporary Work (482):</strong> 20% tax on withdrawal</li>
+                        </ul>
+                    </div>
+
+                    <div class="mt-4">
+                        <h5 class="mb-3"><i class="fas fa-lightbulb text-success me-2"></i>Tips for Accurate Calculation</h5>
+                        <ul>
+                            <li>Include all years you worked in Australia</li>
+                            <li>Use your gross annual salary (before tax)</li>
+                            <li>Select the visa type you held during each year</li>
+                            <li>If you had multiple jobs, add up the total salary for each year</li>
+                            <li>If your visa changed types during the year, split the salary accordingly</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <!-- Sidebar Box -->
+                    <div class="card border-primary border-3 mb-4">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">Calculator Help</h5>
+                        </div>
+                        <div class="card-body">
+                            <h6 class="mb-3">Need Help?</h6>
+                            <p class="small">
+                                If you're unsure about your calculations or have questions about your DASP eligibility, 
+                                our experts can help guide you through the process.
+                            </p>
+                            <a href="services.html" class="btn btn-primary btn-sm w-100">Book a Consultation</a>
+                        </div>
+                    </div>
+
+                    <!-- Common Questions -->
+                    <div class="card">
+                        <div class="card-header bg-secondary text-white">
+                            <h5 class="mb-0">Common Questions</h5>
+                        </div>
+                        <div class="list-group list-group-flush">
+                            <a href="dasp.html" class="list-group-item list-group-item-action small">
+                                What is DASP?
+                                <i class="fas fa-arrow-right float-end"></i>
+                            </a>
+                            <a href="dasp.html" class="list-group-item list-group-item-action small">
+                                Am I eligible?
+                                <i class="fas fa-arrow-right float-end"></i>
+                            </a>
+                            <a href="services.html" class="list-group-item list-group-item-action small">
+                                How long does it take?
+                                <i class="fas fa-arrow-right float-end"></i>
+                            </a>
+                            <a href="services.html" class="list-group-item list-group-item-action small">
+                                Can you help me apply?
+                                <i class="fas fa-arrow-right float-end"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center">
+                    <h3>Ready to Maximize Your Super Return?</h3>
+                    <p class="lead mt-3 mb-4">Let our experts help you with your DASP application</p>
+                    <div class="d-flex gap-3 justify-content-center flex-wrap">
+                        <a href="services.html" class="btn btn-primary btn-lg">
+                            <i class="fas fa-briefcase me-2"></i>Get Professional Help
+                        </a>
+                        <a href="dasp.html" class="btn btn-outline-primary btn-lg">
+                            <i class="fas fa-book me-2"></i>Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>SuperKeeper</h5>
+                    <p>Helping temporary residents in Australia maximize their superannuation returns.</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="dasp.html">DASP Info</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="calculator.html">Calculator</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Contact</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-envelope me-2"></i> <a href="mailto:info@superkeeper.com">info@superkeeper.com</a></li>
+                        <li><i class="fas fa-phone me-2"></i> <a href="tel:+61000000000">+61 000 000 000</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="footer-bottom">
+                <p class="mb-2">&copy; 2025 SuperKeeper. All rights reserved.</p>
+                <p class="small text-muted">This website provides general information only and has been prepared without taking into account your objectives, financial situation or needs. Before making any financial decisions, please consult a licensed financial advisor.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/calculator.js"></script>
+</body>
+</html>
